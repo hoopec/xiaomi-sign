@@ -113,7 +113,7 @@ function findCenter() {
     var pictures2 = images.clip(captureScreen(),0,0,dwidth,dheight);
     images.save(pictures2,"/sdcard/Pictures/pictures2.png","png",100);
     var img2 =images.read("/sdcard/Pictures/pictures2.png");
-    var wx = images.read("/sdcard/Pictures/hk.png");
+    var wx = images.read("/sdcard/Pictures/hk.jpg");
     //截图并找图
     var p = findImage(img2, wx, {
         //region: [0, 50],
