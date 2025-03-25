@@ -653,7 +653,7 @@ function main() {
     log("打开小米社区");
     skipAd(); 
     if (config.浏览帖子) posts();
-    let sign = className("android.widget.ImageView").desc("签到").findOne(20000);
+    let sign = className("android.widget.ImageView").desc("签到").findOne(10000);
     if (sign){
         sign.click();
         log("打开签到页面");
