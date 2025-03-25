@@ -130,12 +130,16 @@ function findCenter() {
         img2.recycle();
         wx.recycle();
         qd();//开始签到
+        return true;
     } 
     else {
         log("没有找到滑块");
+        files.remove("/sdcard/Pictures/pictures2.png");
+        return false;
     }
     sleep(1000);
 }
+
 
 //签到
 function qd() {
@@ -150,10 +154,12 @@ function qd() {
     var pictures = images.clip(img2,rX,dheight*1/3+30,dwidth*5/6-rX,pY-dheight*1/3-30);
     images.save(pictures,"/sdcard/Pictures/pictures.png","png",100);
     img2.recycle();
+    files.remove("/sdcard/Pictures/pictures2.png");
     var img =images.read("/sdcard/Pictures/pictures.png");
     var result =images.inRange(img,"#000000","#858585")
     images.save(result,"/sdcard/Pictures/result.png", "png", 100);
     img.recycle();
+    files.remove("/sdcard/Pictures/pictures.png");
     var image = images.read("/sdcard/Pictures/result.png");
     var path ="/sdcard/Pictures/test.txt";
     if (files.exists(path)) {
@@ -181,6 +187,7 @@ function qd() {
             log("缺口长度为" + sum)
             length = matches[0].length - 1;
             image.recycle();
+            files.remove("/sdcard/Pictures/result.png");
             break;
         }
     }
@@ -629,7 +636,18 @@ function start(){
         log("今日已签到");  
     }
     else{
-        findCenter(); 
+        for(let i = 0; i < 5; i++){
+            log(`第 ${i + 1} 次尝试...`);
+            res = findCenter(); 
+            if (res){
+                log("签到成功");
+                break;
+            }
+            else{
+                log("签到失败，重试中");
+                sleep(5000);
+            }
+        }
     }
 }
 
